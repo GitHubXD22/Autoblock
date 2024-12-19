@@ -1,0 +1,41 @@
+
+local xXqZ2m4 = game.Players.LocalPlayer
+local w9Fg3V1 = xXqZ2m4.Character or xXqZ2m4.CharacterAdded:Wait()
+local k8TqO5r3 = w9Fg3V1:WaitForChild("Humanoid")
+local z3LvY7j6 = game:GetService("ReplicatedStorage").LightsaberRemotes.Block
+
+-- Variable to prevent constant blocking
+local l2WrR1kZ = false
+
+-- Function to block when an enemy gets close
+local function i5BvD3kL()
+    if not l2WrR1kZ then
+        l2WrR1kZ = true
+        z3LvY7j6:FireServer()
+        wait(0.5) -- Add a delay to avoid spamming
+        l2WrR1kZ = false
+    end
+end
+
+-- Detect proximity of enemies
+local function t9RjZ1gX()
+    while wait(0.1) do
+        for _, j7QkT6rA in pairs(game.Players:GetPlayers()) do
+            if j7QkT6rA ~= xXqZ2m4 then
+                local h8FnK2sB = j7QkT6rA.Character
+                if h8FnK2sB and h8FnK2sB:FindFirstChild("HumanoidRootPart") and w9Fg3V1:FindFirstChild("HumanoidRootPart") then
+                    local v3GxL6bZ = (w9Fg3V1.HumanoidRootPart.Position - h8FnK2sB.HumanoidRootPart.Position).Magnitude
+                    if v3GxL6bZ < 10 then -- Trigger block if enemy is within 10 studs
+                        i5BvD3kL()
+                    end
+                end
+            end
+        end
+    end
+end
+
+-- Start the proximity detection loop
+task.spawn(t9RjZ1gX)
+
+-- Print message (this is also obfuscated)
+print(string.char(80, 114, 111, 120, 105, 109, 105, 116, 121, 45, 98, 97, 115, 101, 100, 32, 65, 117, 116, 111, 45, 66, 108, 111, 99, 107, 32, 115, 99, 114, 105, 112, 116, 32, 108, 111, 97, 100, 101, 100, 32, 115, 117, 99, 99, 101, 115, 115, 108, 121, 46))
